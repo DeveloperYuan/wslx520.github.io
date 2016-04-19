@@ -11,7 +11,6 @@
     </style>
 </head>
 <body>
-	<input type="file" name="" id="" title=" " />
     模板：
     <textarea class="div" id="mb" cols="50" rows="10"></textarea>
     编译后：
@@ -22,6 +21,24 @@
     var $ = function (id) {
         return document.getElementById(id);
     }
+    var srcdata = {
+        a:'这是a',
+        obj:{
+            aaa:'aaa in obj',
+            bbb:'bbb in obj'
+        },
+        arr:[11,22,33,44,77],
+        peoples:[
+            {
+                name:'lix',
+                family:['y','a','b']
+            },
+            {
+                name:'xxx',
+                family:['xy','ya','zb']
+            }
+        ]
+    };
     </script>
     <script src="xtml.js"></script>
 </body>
