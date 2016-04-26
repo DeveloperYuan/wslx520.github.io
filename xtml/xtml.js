@@ -11,13 +11,14 @@ var xtml = (function () {
     ifelseReg = /\{\{(\?{1,2})([\s\S]+?)\}\}/g,
     blockReg = /\{\{([\s\S]+?)\}\}/g,
     blockEndReg = /\{\{\s*\/[\~\?]\s*\}\}/g,
+    brReg =/(\n|\r|\t)/g,
     forloopReg = /(\S+)\s+(?:as|in)\s+([\w\$]+)?,?([\w\$]+)?/,
     blankStrReg = /out\+\='\s?';?\n?/g;
     objId = 0,
-    newlinestart = '\';\n',
-    newlineend = '\nout+=\'',
-    joinlinestart = "\'+",
-    joinlineend = "+\'";
+    newlinestart = "';\n",
+    newlineend = "\nout+='",
+    joinlinestart = "'+",
+    joinlineend = "+'";
     function varReplace ($1) {
         return $1.replace(varReg, 'it.$1')
     }
@@ -36,9 +37,10 @@ var xtml = (function () {
         }
     }
     function compile(str) {
-    	return new Function('it', 'var out=\'\';' + newlineend 
+    	return new Function('it', "var out='';" + newlineend 
+            // 
             + trim(str)
-            .replace(/\n+/g,'')
+            .replace(brReg,'\\$1')
             .replace(blockEndReg, newlinestart+'}'+newlineend)
             .replace(ifelseReg, function (m, isif, condition, c) {
                 condition = trim(condition);
@@ -54,8 +56,6 @@ var xtml = (function () {
             })
             // 去除空的 out += ''这样的字符串
             .replace(blankStrReg,'')
-            // 去除不正确的换行
-            // .replace(/\'\n/g,'')
             + newlinestart
             + 'return out;'
         )
