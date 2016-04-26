@@ -26,11 +26,11 @@ var xtml = (function () {
     var templateReplace = {
         '~': function forloopReplace($1) {
             $1 = varReplace($1.replace(
-                    forloopReg,
-                    $1.indexOf(' in ') > -1 
-                    ? 'var $2,$3;\nfor ($3 in $1) { \n$2 = $1[$3];'
-                    : 'for (var arr_'+(objId+=1)+'=$1, $3 = 0, arr_len_'+objId+' = $1.length, $2; $3<arr_len_'+objId+';$3++) { \n$2 = arr_'+objId+'[$3];'
-                ));
+                forloopReg,
+                $1.indexOf(' in ') > -1
+                ? 'var $2,$3;\nfor ($3 in $1) { \n$2 = $1[$3];'
+                : 'for (var arr_' + (objId += 1) + '=$1, $3 = 0, arr_len_' + objId + ' = $1.length, $2; $3<arr_len_' + objId + ';$3++) { \n$2 = arr_' + objId + '[$3];'
+            ));
             return newlinestart + $1 + newlineend;
         },
         '#': function ($1) {
