@@ -8,7 +8,8 @@ var xtml = (function () {
     var trim = function (str) {
             return str.replace(/^\s+/, '').replace(/\s+$/, '');
         },
-        varReg = /\$([\w\$]+)/g,
+        // varReg = /\$([\w\$]+)/g,
+        varReg = /(.)?\$([\w\$]+)/g,
         ifelseReg = /\{\{(\?{1,2})([\s\S]+?)\}\}/g,
         blockReg = /\{\{([\s\S]+?)\}\}/g,
         blockEndReg = /\{\{\s*\/[\~\?]\s*\}\}/g,
@@ -20,8 +21,19 @@ var xtml = (function () {
         newlineend = "\nout+='",
         joinlinestart = "'+",
         joinlineend = "+'";
+    function varFn(m, m1, m2) {
+        console.log(m, m1, m2);
+        if (m1 === undefined) {
+            return 'it.' + m2;
+        }
+        if (/[^\w\$]/.test(m1)) {
+            return m1 + 'it.' + m2;
+        }
+        return m;
+    }
     function varReplace($1) {
-        return $1.replace(varReg, 'it.$1');
+        // return $1.replace(varReg, '$1it.$2');
+        return $1.replace(varReg, varFn);
     }
     var templateReplace = {
         '~': function forloopReplace($1) {

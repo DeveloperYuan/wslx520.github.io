@@ -11,6 +11,9 @@
     </style>
 </head>
 <body>
+<a href="tencent://message/?uin=744898995&Site=夜风如墨&Menu=yes">点这里给我发消息<img class="details-image" src="http://www.inkense.com/wp-content/uploads/2016/04/QQ.png" 
+
+draggable="false" alt="QQ"></a>
     模板：
     <textarea class="div" id="mb" cols="50" rows="10"></textarea>
     编译后：
@@ -38,14 +41,15 @@
         <span>{{~$arr as value,index}} {{? index > 2  }}<em>{{value}}</em> {{/?}} {{/~}} </span> <br/>\
 \
         <p>{{~$$arr as value,index}} <em>{{value}}</em>  {{/~}} </p> <br/>\
-        <span>{{~$obj$2 in value,index}} <em>{{value}}</em> {{/~}} </span>\
+        <span>{{~$obj$o in value,index}} <em>{{value}}</em> {{/~}} </span>\
+        <p>奇特变量：{{$obj$o.aaa$o}}</p>\
         <span>{{~$obj$ in value,index}} <em>{{value}}</em> {{/~}} </span>\
     </div>\
     <div id="peoples">\
         {{~$peoples as people,index}}\
         <p>\
             {{#var pf = people.family}}\
-            name:{{index}},{{people.name}}, family:{{pf.join(\',\')}}\
+            name:{{index+1}},{{people.name}}, family:{{pf.join(\',\')}}\
         </p>\
         {{/~}}\
     </div>\
@@ -54,8 +58,8 @@
     // console.log(str.length, str.replace(/\n/g,'').length)
     var srcdata = {
         a:'这是a',
-        obj$2:{
-            aaa$2:'特殊符号在中间的变量名',
+        obj$o:{
+            aaa$o:'特殊符号在中间的变量名',
             bbb:'bbb in obj'
         },
         obj$:{
@@ -80,7 +84,7 @@
     }
     </script>
     <script src="xtml.js"></script>
-<!--     
+    
     <script>
 console.log(str, /\n/g.test(str))
 var compileFn = xtml(str);
@@ -90,16 +94,29 @@ console.log(
 $('mb').innerHTML = str;
 $('result').innerHTML = compileFn(srcdata);
     </script>
- -->
+
     <script>
-var str = document.getElementById('xtml').innerHTML;
-console.log(str, /\n/g.test(str))
-var compileFn = xtml(str);
-console.log(
-    compileFn, compileFn(data)
-)
-$('mb').innerHTML = str;
-$('result').innerHTML = compileFn(data);
+// var str = document.getElementById('xtml').innerHTML;
+// console.log(str, /\n/g.test(str))
+// var compileFn = xtml(str);
+// console.log(
+//     compileFn, compileFn(data)
+// )
+// $('mb').innerHTML = str;
+// $('result').innerHTML = compileFn(data);
+    </script>
+    <script>
+var childTemp = '\
+{{@Li}}\
+<li>{{li.name}},\
+{{@import Span({age:li.age})}}\
+</li>\
+{{/@Li}}\
+{{@Span}}\
+<span>{{age}}</span>\
+{{/@Span}}\
+';
+
     </script>
 </body>
 </html>
