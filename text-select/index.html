@@ -3,7 +3,8 @@
 <head>
     <title>Javascript 选择文本</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <script type="text/javascript">
+    <link rel="stylesheet" href="css.css" />
+    <script type="text/javascript" src="js.js">
 
 	</script>
 </head>
@@ -36,6 +37,14 @@ JS实现选中文本框内部分文字的效果：
 获得焦点时，浏览器滚动条会滚到此时获得焦点的元素处.
 <div style="height: 700px;"></div>
 <textarea name="" id="tt" cols="30" rows="10"></textarea>
+<pre>
+link与script标签，均有id属性，可以给个id，然后用getElementById获取到，然后像普通标签一样remove掉他。
+style标签一样
+
+link与style标签被删后，其引入的样式都会失效
+
+但script标签被删后，其引入的代码在当前页面还能执行
+</pre>
 <script type="text/javascript">
 var textSelect = function(o, a, b){
 	//o是当前对象，例如文本域对象
