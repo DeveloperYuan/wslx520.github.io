@@ -11,9 +11,6 @@
     </style>
 </head>
 <body>
-<a href="tencent://message/?uin=744898995&Site=夜风如墨&Menu=yes">点这里给我发消息<img class="details-image" src="http://www.inkense.com/wp-content/uploads/2016/04/QQ.png" 
-
-draggable="false" alt="QQ"></a>
     模板：
     <textarea class="div" id="mb" cols="50" rows="10"></textarea>
     编译后：
@@ -23,7 +20,7 @@ draggable="false" alt="QQ"></a>
 <!--xtml 的模板 -->
 <script id="xtml" type="text/tmpl">
 <ul>
-    {{~$list as val,idex}}
+    {{~${list} as val,idex}}
         <li>用户: {{val.user}}, 网站：{{val.site}}</li>
     {{/~}}
 </ul>
@@ -38,15 +35,15 @@ draggable="false" alt="QQ"></a>
 \
 \
 \
-        <span>{{~$arr as value,index}} {{? index > 2  }}<em>{{value}}</em> {{/?}} {{/~}} </span> <br/>\
+        <span>{{~${arr} as value,index}} {{? index > 2  }}<em>{{value}}</em> {{/?}} {{/~}} </span> <br/>\
 \
-        <p>{{~$$arr as value,index}} <em>{{value}}</em>  {{/~}} </p> <br/>\
-        <span>{{~$obj$o in value,index}} <em>{{value}}</em> {{/~}} </span>\
-        <p>奇特变量：{{$obj$o.aaa$o}}</p>\
-        <span>{{~$obj$ in value,index}} <em>{{value}}</em> {{/~}} </span>\
+        <p>{{~${$arr} as value,index}} <em>{{value}}</em>  {{/~}} </p> <br/>\
+        <span>{{~${obj$o} in value,index}} <em>{{value}}</em> {{/~}} </span>\
+        <p>奇特变量：{{${obj$o.aaa$o}}}</p>\
+        <span>{{~${obj$} in value,index}} <em>{{value}}</em> {{/~}} </span>\
     </div>\
     <div id="peoples">\
-        {{~$peoples as people,index}}\
+        {{~${peoples} as people,index}}\
         <p>\
             {{#var pf = people.family}}\
             name:{{index+1}},{{people.name}}, family:{{pf.join(\',\')}}\

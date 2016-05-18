@@ -2,14 +2,16 @@
 支持if,else, else if
 支持for, for in
 支持中途变量缓存。比如data中有个很深的对象：peoples.people.family,可以使用#var pf = peoples.people.family把它存下来，在后面用pf访问此数据
+2016/5/16:
+决定插值语句和命令语句采用不同语法（如etpl一般）
 */
 var xtml = (function () {
     'use strict';
     var trim = function (str) {
             return str.replace(/^\s+/, '').replace(/\s+$/, '');
         },
-        // varReg = /\$([\w\$]+)/g,
-        varReg = /(.)?\$([\w\$]+)/g,
+        varReg = /\$\{(\S+?)\}/g,
+        // varReg = /(.)?\$([\w\$]+)/g,
         ifelseReg = /\{\{(\?{1,2})([\s\S]+?)\}\}/g,
         blockReg = /\{\{([\s\S]+?)\}\}/g,
         blockEndReg = /\{\{\s*\/[\~\?]\s*\}\}/g,
@@ -32,8 +34,8 @@ var xtml = (function () {
         return m;
     }
     function varReplace($1) {
-        // return $1.replace(varReg, '$1it.$2');
-        return $1.replace(varReg, varFn);
+        return $1.replace(varReg, 'it.$1');
+        // return $1.replace(varReg, varFn);
     }
     var templateReplace = {
         '~': function forloopReplace($1) {
