@@ -31,22 +31,22 @@
     }
 
     var str = '\
-    <div id="{{$a}}">\
+    <div id="${it.a}">\
 \
 \
 \
-        <span>{{~${arr} as value,index}} {{? index > 2  }}<em>{{value}}</em> {{/?}} {{/~}} </span> <br/>\
+        <span>{{~it.arr as value,index}} {{? index > 2  }}<em>${value}</em> {{/?}} {{/~}} </span> <br/>\
 \
-        <p>{{~${$arr} as value,index}} <em>{{value}}</em>  {{/~}} </p> <br/>\
-        <span>{{~${obj$o} in value,index}} <em>{{value}}</em> {{/~}} </span>\
-        <p>奇特变量：{{${obj$o.aaa$o}}}</p>\
-        <span>{{~${obj$} in value,index}} <em>{{value}}</em> {{/~}} </span>\
+        <p>{{~it.$arr as value,index}} <em>${value}</em>  {{/~}} </p> <br/>\
+        <span>{{~it.obj$o in value,index}} <em>${value}</em> {{/~}} </span>\
+        <p>奇特变量：${it.obj$o.aaa$o}</p>\
+        <span>{{~it.obj$ in value,index}} <em>${value}</em> {{/~}} </span>\
     </div>\
     <div id="peoples">\
-        {{~${peoples} as people,index}}\
+        {{~it.peoples as people,index}}\
         <p>\
-            {{#var pf = people.family}}\
-            name:{{index+1}},{{people.name}}, family:{{pf.join(\',\')}}\
+            {{var pf = people.family}}\
+            name:${index+1},${people.name}, family:${pf.join(\',\')}\
         </p>\
         {{/~}}\
     </div>\
