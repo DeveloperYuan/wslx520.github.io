@@ -49,12 +49,35 @@ var xtml = (function () {
     function notjoin ($1) {
         return newlinestart + $1 + newlineend;
     }
+    /*
+    function keys (obj) {
+        var ks = Object.keys(obj);
+        var waitEval = 'var ';
+        for(var i=ks.length;i--;){
+            // waitEval += ks[i] + '=obj["'+ks[i]+'"],';
+            console.log('var '+ks[i] +'='+'obj["'+ks[i]+'"];')
+            eval('var '+ks[i] +'='+'obj["'+ks[i]+'"];');
+        }
+        waitEval = waitEval.slice(0,-1)+';';
+        console.log(waitEval);
+        // eval在严格模式下无法用，弃!
+        eval(waitEval);
+        eval('var aa = 23222');
+        // var d=obj['d'],c=obj['c'],b=obj['b'],a=obj['a'];
+        console.log()
+        setTimeout(function () {
+            console.log(a,b,c,d)
+        },200)
+        
+    }
+    keys({a:1,b:{'aaa':1},c:'dddddddd',d:[1,2,3,4]})
+    */
     var templateReplace = {
         '~': forloopReplace,
         '#': notjoin
     };
-    function compile(str) {
-        return new Function('it', "var out='';" + newlineend
+    function compileSource (str) {
+        return "var out='';" + newlineend
             + trim(str)
             .replace(varReg, joinlinestart + '($1)' + joinlineend)
             .replace(brReg, '\\$1')
@@ -77,7 +100,33 @@ var xtml = (function () {
             .replace(blankStrReg, '')
             + newlinestart
             + 'return out;'
-        );
     }
+    function compile(temStr,arglist) {
+        temStr = compileSource(temStr);
+        return new Function(arglist == void 0 ? 'it' : arglist, temStr);
+    }
+    function splitArgs (obj,ks) {        
+        // var ks = Object.keys(obj);
+        var waitEval = 'var ';
+        for(var i=ks.length;i--;){
+            waitEval += ks[i] + '='+obj+'["'+ks[i]+'"],';
+        }
+        return waitEval.slice(0,-1)+';';        
+    }
+    var obj = {a:1,b:{'aaa':1},c:'dddddddd',d:[1,2,3,4]};
+    // console.log(splitArgs(obj)(obj));
+    var Compile = function (str) {
+        this.temlate = compileSource(str);
+        this.keys = null;
+
+    }
+    Compile.prototype.render = function (data) {
+        var keys = Object.keys(data);
+        var localeVar = splitArgs('it',keys);
+        // console.log(keys, localeVar)
+        // console.log(localeVar + this.temlate)
+        return new Function('it', localeVar + this.temlate)(data);
+    }
+    return Compile;
     return compile;
 }());

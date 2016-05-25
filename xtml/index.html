@@ -84,12 +84,24 @@
     
     <script>
 console.log(str, /\n/g.test(str))
-var compileFn = xtml(str);
 console.log(
-    compileFn, compileFn(srcdata)
+    // compileFn, compileFn(srcdata)
+    // compileFn.template
 )
 $('mb').innerHTML = str;
-$('result').innerHTML = compileFn(srcdata);
+var t = Date.now();
+console.log(t)
+// var compileFn = xtml(str);
+// for(var i=0;i<1000;i++) {
+//     compileFn(srcdata);
+// }
+// $('result').innerHTML = compileFn(srcdata);
+var compileFn = new xtml(str);
+for(var i=0;i<1000;i++) {
+    compileFn.render(srcdata);
+}
+$('result').innerHTML = compileFn.render(srcdata);
+console.log(Date.now() -t);
     </script>
 
     <script>
