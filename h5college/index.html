@@ -2,17 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport"content="width =device-width,initial-scale=1,minimum-scale = 1, maximum-scale = 1, user-scalable = no"/>
     <title>课程</title>
     <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
+
     <div id="wrap">
         <router-view>222</router-view>
     </div>
     <!-- templates -->
-    <script type="text/template" id="tpl_course">
+    <template id="search-bar">
+        <form action="" method="POST" class="search_form">
+            <input type="text" name="keyword" id="" class="textbox" />
+            <input type="submit" value="搜索" class="btn-submit" />
+        </form>
+    </template>
+    <template id="banner">
+        <div class="banner">
+            <ul class="img_list">
+                <li><a href="#"><img src="" alt="banner1" /></a></li>
+                <li><a href="#"><img src="" alt="banner2" /></a></li>
+                <li><a href="#"><img src="" alt="banner3" /></a></li>
+            </ul>
+            <ul class="pager">
+                <li>&#183;</li>
+                <li>&#183;</li>
+                <li>&#183;</li>
+            </ul>
+        </div>
+    </template>
+    <template id="main-tab">
+        <div id="main_tab" class="tab_wrap">
+                <a v-link="{path:'/course', activeClass:'active'}" class="tab">课程</a>
+                <a v-link="{path:'/jincourse', activeClass:'active'}" class="tab">今课堂</a>
+                <a v-link="{path:'/me', activeClass:'active'}" class="tab">我</a>
+            </div>
+    </template>
 
-    </script>
+    <template id="course-list-tpl">
+        <ul>
+            <li v-for="my in courses">
+                <a v-link="{path:my.url}">
+                    <p>
+                        <img :src="'/assets/img/' + my.cover" alt="{{my.name}}" />
+                        <span class="info">
+                            {{my.duration}}
+                            | {{my.peoples}}
+                        </span>
+                    </p>
+                    <span>{{my.name}}</span>
+                </a>
+            </li>
+        </ul>
+    </template>
+    <template id="index-tpl">
+        <search></search>
+        <banner></banner>
+        <p>This is Course!</p>
+        <div class="courses">
+            最近学习：<a v-link="{path:'/courses/333232'}">到某门课程详情</a>
+        </div>
+        <div class="courses">
+            最新课程：<a v-link="{path:'/course/list', query:{cat:0,order:0}}">更多&gt;</a>
+            <course-list :courses="newcourses"></course-list>
+        </div>
+        <div class="courses">
+            最热课程：<a v-link="{path:'/course/list', query:{cat:0,order:1}}">更多&gt;</a>
+            <course-list :courses="hotcourses"></course-list>
+        </div>
+        <div class="courses">
+            沟通技巧：<a v-link="{path:'/course/list', query:{cat:1,order:0}}">更多&gt;</a>
+            <course-list :courses="courses_goutong"></course-list>
+        </div>
+        <main-tab></main-tab>
+    </template>
+    <div id="loading" style="display:none">Loading</div>
     <!-- all scripts -->
     <script src="lib/zepto.js"></script>
     <script src="lib/vue.js"></script>

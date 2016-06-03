@@ -1,1 +1,71 @@
-{}
+{
+    "index": {
+        "hotcourses": [
+            {
+                "name": "课程名字",
+                "cover": "1.jpg",
+                "duration": "5:30",
+                "peoples": 333,
+                "url": "/courses/212"
+            },
+            {
+                "name": "222课程名字",
+                "cover": "2.jpg",
+                "duration": "51:30",
+                "peoples": 12,
+                "url": "/courses/111"
+            }
+        ],
+        "newcourses": [
+            {
+                "name": "新课程名字",
+                "cover": "3.jpg",
+                "duration": "15:30",
+                "peoples": 78,
+                "url": "/courses/312"
+            },
+            {
+                "name": "新222课程名字",
+                "cover": "4.jpg",
+                "duration": "1:30",
+                "peoples": 22,
+                "url": "/courses/221123"
+            }
+        ],
+        "courses_goutong": [
+            {
+                "name": "沟通新课程名字",
+                "cover": "1.jpg",
+                "duration": "15:30",
+                "peoples": 78,
+                "url": "/courses/31112"
+            },
+            {
+                "name": "沟通2",
+                "cover": "3.jpg",
+                "duration": "1:30",
+                "peoples": 22,
+                "url": "/courses/1233"
+            }
+        ]
+    },
+    "myservices": {
+        "status":0,
+        "history": [
+            {
+                "doneDate": "2015-1-1 11:11",
+                "startDate":"2015-1-1",
+                "endDate":"2016-1-1",
+                "type":"year,1",
+                "num":1
+            },
+            {
+                "doneDate": "2015-3-12 12:11",
+                "startDate":"2015-3-12",
+                "endDate":"2016-3-12",
+                "type":"year,0",
+                "num":2
+            }
+        ]
+    }
+}

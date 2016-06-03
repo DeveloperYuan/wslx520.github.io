@@ -55,6 +55,9 @@ input, button, textarea, select, optgroup, option {
 input, button, textarea, select {
   *font-size: 100%; }
 
+img {
+  max-width: 100%; }
+
 .v-m:before {
   content: '';
   display: inline-block;
@@ -64,6 +67,43 @@ input, button, textarea, select {
 
 .v-m > * {
   vertical-align: middle; }
+
+.banner {
+  position: relative; }
+  .banner .pager {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    font-size: 0; }
+    .banner .pager li {
+      display: inline-block;
+      font-size: 1.2rem; }
+
+.courses {
+  position: relative;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #fafafa; }
+  .courses ul {
+    display: block;
+    font-size: 0; }
+    .courses ul li {
+      display: inline-block;
+      width: 50%;
+      font-size: 1rem; }
+      .courses ul li a {
+        display: block; }
+        .courses ul li a p {
+          position: relative; }
+          .courses ul li a p span {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5); }
+      .courses ul li img {
+        min-height: 80px;
+        width: 100%; }
 
 #main_tab {
   position: fixed;
