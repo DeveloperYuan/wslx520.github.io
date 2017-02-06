@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>xtml: javascript模板引擎</title>
+    <style>
+    .div {
+        max-width: 500px;
+        border: 1px solid red;
+    }
+    </style>
+</head>
+<body>
+    模板：
+    <textarea class="div" id="mb" cols="50" rows="10"></textarea>
+    编译后：
+    <textarea class="div" id="by" cols="50" rows="10"></textarea>
+    渲染结果：
+    <textarea class="div" id="result" cols="50" rows="10"></textarea>
+<!--xtml 的模板 -->
+<script id="xtml" type="text/tmpl">
+<ul>
+    {{~${list} as val,idex}}
+        <li>用户: {{val.user}}, 网站：{{val.site}}</li>
+    {{/~}}
+</ul>
+</script>
+    <script>
+    var $ = function (id) {
+        return document.getElementById(id);
+    }
+
+    var str = '\
+    <div id="${a}">\
+\
+\
+\
+        <span>{{~${arr} as value,index}} {{? index > 2  }}<em>{{value}}</em> {{/?}} {{/~}} </span> <br/>\
+\
+        <p>{{~${$arr} as value,index}} <em>{{value}}</em>  {{/~}} </p> <br/>\
+        <span>{{~${obj$o} in value,index}} <em>{{value}}</em> {{/~}} </span>\
+        <p>奇特变量：{{${obj$o.aaa$o}}}</p>\
+        <span>{{~${obj$} in value,index}} <em>{{value}}</em> {{/~}} </span>\
+    </div>\
+    <div id="peoples">\
+        {{~${peoples} as people,index}}\
+        <p>\
+            {{#var pf = people.family}}\
+            name:{{index+1}},{{people.name}}, family:{{pf.join(\',\')}}\
+        </p>\
+        {{/~}}\
+    </div>\
+    \
+    ';
+    // console.log(str.length, str.replace(/\n/g,'').length)
+    var srcdata = {
+        a:'这是a',
+        obj$o:{
+            aaa$o:'特殊符号在中间的变量名',
+            bbb:'bbb in obj'
+        },
+        obj$:{
+            k$:'特殊符号在尾巴',
+            k:'bbb in obj'
+        },
+        arr:[11,22,33,44,77],
+        $arr:[22,33,'特殊符号开头的变量名',44,77],
+        peoples:[
+            {
+                name:'lix',
+                family:['y','a','b']
+            },
+            {
+                name:'xxx',
+                family:['xy','ya','zb']
+            }
+        ]
+    };
+    var data = {
+        list:[{user:'lix',site:'null'},{user:'lilei',site:'jjjj'}]
+    }
+    </script>
+    <script src="xtml.js"></script>
+    
+    <script>
+console.log(str, /\n/g.test(str))
+var compileFn = xtml(str);
+console.log(
+    compileFn, compileFn(srcdata)
+)
+$('mb').innerHTML = str;
+$('result').innerHTML = compileFn(srcdata);
+    </script>
+
+    <script>
+// var str = document.getElementById('xtml').innerHTML;
+// console.log(str, /\n/g.test(str))
+// var compileFn = xtml(str);
+// console.log(
+//     compileFn, compileFn(data)
+// )
+// $('mb').innerHTML = str;
+// $('result').innerHTML = compileFn(data);
+    </script>
+    <script>
+var childTemp = '\
+{{@Li}}\
+<li>{{li.name}},\
+{{@import Span({age:li.age})}}\
+</li>\
+{{/@Li}}\
+{{@Span}}\
+<span>{{age}}</span>\
+{{/@Span}}\
+';
+
+    </script>
+</body>
+</html>

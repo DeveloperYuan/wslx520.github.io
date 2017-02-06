@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>css3 展示</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <link rel="stylesheet" href="index.css" />
+    <style>
+    .div {
+        width: 80px;
+        background-color: #eee;
+    }
+    </style>
+</head>
+<body>
+<h2>动画</h2>
+<div class="div" id="zan">赞+1</div>
+<script>
+    var zan = document.getElementById('zan');
+    zan.onclick = function (e) {
+        // this.style.MozAnimation = '';
+        // this.style.MozAnimation= 'zan 0.5s 2';
+        // this.style.MozAnimationPlayState = 'paused';
+        // this.style.MozAnimationPlayState = 'running';
+        this.className = 'animate div';
+        var t = this;
+        setTimeout(function () {
+            t.className = 'div';
+        },500)
+    }
+</script>
+</body>
+</html>

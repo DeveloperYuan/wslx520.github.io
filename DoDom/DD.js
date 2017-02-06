@@ -43,12 +43,18 @@ var dd,
             hasClass = function(elm, cls) {
                 return (' ' + elm.className + ' ').indexOf(' ' + cls + ' ') !== -1;
             },
+            // 替换字符串相应部分为空
+            replaceString = function (str, rep) {
+                return str.replace(rep, '');
+            },
             removeClass = function(elm, cls) {
                 cls = splitString(cls);
-                for (var c = 0, cc; cc = cls[c++]; removeSingleClass(elm, cc));
+                var curClass = ' ' + elm.className + ' ';
+                for (var c = 0, cc; cc = cls[c++]; curClass.replace(' ' + cc + ' ', ' '));
+                elm.className = cleanString(curClass);
             },
             removeSingleClass = function(elm, cc) {
-                elm.className = elm.className.replace(RegExp('\\b' + cc + '\\b', "g"), '');
+                elm.className = (' ' + elm.className + ' ').replace(' ' + cc + ' ', ' ');
             },
             remove = function(elem) {
                 elem.parentNode.removeChild(elem);
@@ -362,24 +368,25 @@ var dd,
         DoDom.prototype = {
             constructor: DoDom,
             splice: tempArr.splice,
-            hasClass: function(clses) {
-                var  cl, singleClass = clses.indexOf(' ') === -1, n;
-                // 只有一个class
-                if(singleClass) {
-                    // 节点集里只有一个节点时
-                    if(this.length === 1) return hasClass(this[0], clses);
-                    for (n = 0, node; node = this[n++];) {
-                        if (hasClass(node, clses)) {
-                           return true;
-                        }
+            // 本来支持同时判断多个class，后来决定把判断多个class写为另一个独立函数
+            // 此函数只能同时判断一个className
+            hasClass: function(cls) {
+                var n = 0;
+                // 节点集里只有一个节点时
+                if(this.length === 1) return hasClass(this[0], cls);
+                for (n = 0, node; node = this[n++];) {
+                    if (hasClass(node, cls)) {
+                       return true;
                     }
-                    return false;
                 }
-                clses = splitString(clses);                                
-                cl = clses.length;
-                for (n = 0, node, hasAll, c; node = this[n++];) {
+                return false;
+            },
+            hasClasses: function (clses) {                
+                clses = splitString(clses);
+                var cl = clses.length, n=0, c = cl, node, hasAll;
+                for (; node = this[n++];) {
                     hasall = 0;
-                    for (c = cl; c--;) {
+                    for (; c--;) {
                         if (hasClass(node, clses[c])) {
                             hasall += 1;
                         }

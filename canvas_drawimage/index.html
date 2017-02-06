@@ -16,6 +16,7 @@
     var smallcanvas = document.getElementById('smallcanvas');
     var big = bigcanvas.getContext('2d');
     var small = smallcanvas.getContext('2d');
+    var t;
     img.onload = function () {
         var t = Date.now();
         small.drawImage(img,0,0,100,100);
@@ -27,18 +28,26 @@
     }
     var reader= new FileReader();
     reader.onload = function (e) {
-        console.log(e.target.result);
+        // console.log(e.target.result);
         var file = e.target.result;
-            var t = Date.now();
-            small.drawImage(file,0,0,100,100);
+        // 预览图片：
+        var pic = new Image();
+        // 1，把base64编码给一个img.src . 
+        // （试了各种办法，当图片很大时，还是很费时间）
+        pic.src = file;
             console.log(Date.now() - t);
-            t = Date.now();
-            big.drawImage(file,0,0,1000,1000);
-            console.log(Date.now() - t);
+            // var t = Date.now();
+            // small.drawImage(file,0,0,100,100);
+            // console.log(Date.now() - t);
+            // t = Date.now();
+            // big.drawImage(file,0,0,1000,1000);
+            // console.log(Date.now() - t);
     }
     file.onchange = function () {
         if(this.files[0]) {
             var file = this.files[0];
+            t = Date.now();
+
             reader.readAsDataURL(file);
         }
 

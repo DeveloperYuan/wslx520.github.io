@@ -5,11 +5,12 @@
 	<title>在上传之前就获取文件大小</title>
 </head>
 <body>
-<input type="text" id="input" placeholder="ppppppppp" onblur="" />
 <br />
 <form name="upload">
+<img src="../icon4qyq/img/sprite@1x.png" alt="" id="img" />
 <input type="file" name="file" id="file">
 <input type="button" value="Size?" onClick="getSize();">
+<input type="button" value="img size" onClick="getImgSize();">
 </form>
 <script>
 	function $ (id) {
@@ -17,6 +18,9 @@
 	}
 </script>
 <script>
+function getImgSize () {
+    alert($('img').size)
+}
 function getSize()
 {
     var html5 = window.File && window.FileReader && window.FileList
@@ -28,6 +32,7 @@ function getSize()
         }
         console.log(size);
     } else {
+        // 通过activeX来判断，有安全问题，需要设置，对普通用户无法使用
         var myFSO = new ActiveXObject("Scripting.FileSystemObject");
         var filepath = document.upload.file.value;
         var thefile = myFSO.getFile(filepath);

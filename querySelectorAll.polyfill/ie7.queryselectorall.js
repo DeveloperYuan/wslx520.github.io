@@ -1,3 +1,5 @@
+/*这种方法已被证实非常不稳定，得到的结果不准确，弃用*/
+
 !function psudoQuerySelector (doc) {
     if (doc.querySelectorAll) return;
     var head = doc.documentElement.firstChild;
