@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <title>限制用户输入</title>
+</head>
+<body>
+    <script type="text/javascript">
+    function noNumbers(e) {
+        var keynum
+        var keychar
+        var numcheck
+        e = e || window.event;
+        var target = e.target || e.srcElement;
+        var value = target.value;
+        console.log(value, getCursortPosition(target));
+        var caret = getCursortPosition(target);
+        if (window.event) // IE
+        {
+            keynum = e.keyCode
+        } else if (e.which) // Netscape/Firefox/Opera
+        {
+            keynum = e.which
+        }
+        keychar = String.fromCharCode(keynum)
+        numcheck = /\d/
+        var index = value.indexOf('.');
+        console.log(value, index)
+        if (index > -1 && value.slice(index).length > 2 && caret > value.length - 3) {
+            return false
+        }
+        return numcheck.test(keychar) || (keychar === '.')
+    }
+
+    function getCursortPosition(ctrl) { //获取光标位置函数
+        var CaretPos = 0; // IE Support
+        if (document.selection) {
+            ctrl.focus();
+            var Sel = document.selection.createRange();
+            Sel.moveStart('character', -ctrl.value.length);
+            CaretPos = Sel.text.length;
+        }
+        // Firefox support
+        else if (ctrl.selectionStart || ctrl.selectionStart == '0')
+            CaretPos = ctrl.selectionStart;
+        return (CaretPos);
+    }
+    </script>
+    <form>
+        此输入框只允许输入数字与小数点。且小数点后如果有2位数字了，则无法输入更多位小数。但可以在整数部分继续输入——因为输入时判断了光标的位置
+        <br />
+        <input type="text" onkeypress="return noNumbers(event)" />
+        <br />
+        当然，可以使用 replace轻松实现本效果。本例只为展示 如何获得光标位置，以及获得后的一种用法
+    </form>
+
+</html>
