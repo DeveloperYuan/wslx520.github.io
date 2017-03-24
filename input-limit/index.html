@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>限制输入</title>
+</head>
+
+<body>
+    <input type="text" name="" id="t" />
+    <script>
+    // 这个不能拦截到 ctrl+v
+    document.getElementById('t').onkeypress = function(e) {
+        var input = this;
+        var keynum
+        var keychar
+        var check
+
+        if (window.event) // IE
+        {
+            keynum = e.keyCode
+        } else if (e.which) // Netscape/Firefox/Opera
+        {
+            keynum = e.which
+        }
+        keychar = String.fromCharCode(keynum)
+        check = /[^\d\-\(\)]/
+        return !check.test(keychar);
+    }
+    // 能拦截任何输入，兼容至IE9+，比如用户ctrl+v非法值进来，会被替换（但同时光标会被置于最后）
+    document.getElementById('t').oninput = function(e) {
+        var input = this;
+        var val = input.value;
+        console.log(val);
+        if (/[^\d\-\(\)]/.test(val)) {
+            input.value = val.replace(/[^\d\-\(\)]/g, '');
+        }
+    }
+    </script>
+</body>
+
+</html>
