@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义表单组件的样式</title>
+    <script src="iedetector.js"></script>
+    <style>
+    .custom-control {
+  display: inline-block;
+}
+
+.custom-control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.custom-control input ~ i {
+  display: inline-block;
+}
+
+.custom-control.custom-radio i {
+  background-color: #0f0;
+  width: 14px;
+  height: 14px;
+}
+
+.custom-control.custom-radio input:checked ~ i {
+  background-position: 0 -60px;
+  background-color: #f00;
+}
+.i-checks {
+  cursor: default;
+}
+
+.i-checks i {
+  display: inline-block;
+  background-color: #ccc;
+  width: 16px;
+  height: 16px;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+  position: relative;
+  font-size: 0;
+}
+
+.i-checks input {
+  opacity: 0;
+  filter: Alpha(Opacity=0);
+}
+
+.i-checks input[type="checkbox"] + i {
+  background-position: 0 0;
+  background-color: #0f0;
+}
+
+.i-checks input[type="checkbox"]:checked + i {
+  background-position: -16px 0;
+  background-color: #f00;
+}
+
+.i-checks input[type="radio"] + i {
+  background-position: 0 -16px;
+  background-color: #0f0;
+}
+
+.i-checks input[type="radio"]:checked + i {
+  background-position: -16px -16px;
+  background-color: #f00;
+}
+
+.i-checks.checked input[type="checkbox"] + i {
+  background-position: -16px 0;
+}
+
+.i-checks.checked input[type="radio"] + i {
+  background-position: -16px -16px;
+}
+
+/* disabled status */
+.ie8 .i-checks i {
+  display: none;
+}
+
+.ie8 .i-checks input {
+  opacity: 1;
+  filter: Alpha(Opacity=100);
+}
+
+/* disabled status */
+.ie8 .i-checks i {
+  display: none;
+}
+
+.ie8 .i-checks input {
+  opacity: 1;
+  filter: Alpha(Opacity=100);
+}
+
+    </style>
+</head>
+<body>
+    用纯css
+    <br>
+    主要是使用 +/~ CSS关系选择器（支持IE7+）和 :checked 选择器，这是 css3 的，所以只支持 IE9+ <br>
+    对于IE8-，有两种方案：
+    <ol>
+      <li>不考虑自定义样式，用原生态</li>
+      <li>非要用自定义样式，则需要使用 js 配合实现选中切换的效果（无非是 toggle class）</li>
+    </ol>
+    另实现了一个简单的 iedetector.js，在 head 中引入后，会在 html 节点上加上 'ie7 lt-ie11 lt-ie10 lt-ie9 lt-ie8' 这样的代码，方便强制对某些低版本 IE 做样式调试
+    <form action="">
+        <fieldset>
+            <label class="custom-control custom-radio"><input type="checkbox" name="check" id=""><i></i><span class="text">checkbox 1</span></label>
+            <label class="custom-control custom-radio"><input type="checkbox" name="check" id=""><i></i><span class="text">checkbox 2</span></label>
+        </fieldset>
+    <label class="custom-control custom-radio">
+        <input type="radio" name="shortcut" id="">
+        <i></i>
+        <span class="text">radio 1</span>
+    </label>
+    <br>
+    <label class="i-checks">
+        <input type="radio" name="shortcut" id="">
+        <i></i>
+        <span class="text">radio 2</span>
+    </label>
+    </form>
+</body>
+<script>
+  // alert(document.documentMode);
+</script>
+</html>
