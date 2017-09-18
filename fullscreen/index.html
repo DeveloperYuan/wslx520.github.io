@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>fullscreen</title>
+	<style>
+		html, body {
+			height: 100%;
+		}
+		.wrap {
+			min-height: 100%;
+			width: 100%;
+			background-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap" id="wrap">
+	<button type="button" id="btn">点此按钮进入全屏浏览</button>
+	<br>
+	或按 F11 手动进入全屏(ESC 或再次按 F11 可退出全屏)
+	<p>使用全屏需要一个 element. 这个 element 最好是全屏,不然进入全屏后会出现奇怪的布局</p>
+	</div>
+	<script>
+		var getFullScreen = function (wrapper) {
+			var methods = [
+				['requestFullscreen', 'exitFullscreen', 'fullscreenEnabled', 'fullscreenElement'],
+				['mozRequestFullScreen', 'mozCancelFullScreen', 'mozFullscreenEnabled', 'mozFullscreenElement'],
+				['webkitRequestFullscreen', 'webkitExitFullscreen', 'webkitFullscreenEnabled', 'webkitFullscreenElement'],
+				['msRequestFullscreen', 'msExitFullscreen', 'msFullscreenEnabled', 'msFullscreenElement']
+				];
+			for (var i = 0; i< methods.length; i++) {
+				var mi = methods[i];
+				console.log(typeof wrapper[mi[0]] == 'function' && typeof document[mi[1]] == 'function')
+				if (typeof wrapper[mi[0]] == 'function' && typeof document[mi[1]] == 'function') {
+					return {
+						enter: function () {
+							wrapper[mi[0]]();
+						},
+						exit: function () {
+							document[mi[1]]();
+						},
+						enabled: function () {
+							return document[mi[2]];
+						},
+						element: function () {
+							return document[mi[3]];
+						}
+					};
+				}
+			}
+			return null;
+		}
+		document.getElementById('btn').onclick = function (e) {
+			var full = getFullScreen(document.getElementById('wrap'));
+			if (!full) {
+				alert('你的浏览器不支持全屏!');
+				return
+			};
+			console.log(full, full.element(), full.enabled())
+			if (full.element()) {
+				full.exit();
+			} else {
+				full.enter();
+			}
+		}
+		// showFullScreen();
+	</script>
+</body>
+</html>
